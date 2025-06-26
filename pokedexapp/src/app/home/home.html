@@ -1,11 +1,21 @@
-<!-- <div>
-    <h2>Available Pokemon</h2>
-    @for (pokemonResult of pokemonResults(); track $index) {
-    <app-pokemon [pokemonURL]="pokemonResult.url" />
-    }
+<div class="pokemon-logo">
+    <h1 class="title">Available Pokémon</h1>
+
+</div>
+
+<section>
+
+    <mat-grid-list [cols]="isMobileView()? 1 : 10" rowHeight="2:1">
+        @if (pokemonList$ | async; as pokemonList) {
+        @for (pokemon of pokemonList; track $index) {
+
+        <mat-grid-tile>
+            <app-pokemon [pokemonNameInput]="pokemon.species?.name"
+                [pokemonImageURLInput]="pokemon.sprites?.front_default" />
+        </mat-grid-tile>
 
 
-
-</div> -->
-
-<div>home page</div>
+        }
+        }
+    </mat-grid-list>
+</section>

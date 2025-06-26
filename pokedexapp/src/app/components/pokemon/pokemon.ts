@@ -1,9 +1,5 @@
-import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { Component, input, OnInit, signal } from '@angular/core';
 
-import { PokemonResult } from '../../models/PokemonResult.type';
-import { PokemonServices } from '../../services/pokemon-services';
-import { catchError } from 'rxjs';
-import { PokemonType } from '../../models/pokemon.type';
 @Component({
   selector: 'app-pokemon',
   imports: [],
@@ -11,17 +7,13 @@ import { PokemonType } from '../../models/pokemon.type';
   styleUrl: './pokemon.scss'
 })
 export class Pokemon implements OnInit {
-  pokemonService = inject(PokemonServices)
-  pokemonURL = input.required<string>()
-  pokemonInfo = signal<PokemonType>({})
+  pokemonNameInput = input.required<string | undefined>()
+  pokemonImageURLInput = input.required<string | undefined>()
+
+  pokemonName = signal<string | undefined>('')
+  pokemonImageURL = signal<string | undefined>('')
   ngOnInit(): void {
-    this.pokemonService.getPokemon(this.pokemonURL()).pipe(
-      catchError((err) => {
-        console.log(err)
-        throw err
-      })
-    ).subscribe((pokemon) =>
-      this.pokemonInfo.set(pokemon)
-    )
+    this.pokemonName.set(this.pokemonNameInput())
+    this.pokemonImageURL.set(this.pokemonImageURLInput())
   }
 }

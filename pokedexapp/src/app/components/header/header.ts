@@ -1,5 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
@@ -7,33 +6,28 @@ import { LoginServices } from '../../services/login-services';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
+import { ResponsiveServices } from '../../services/responsive-services';
 @Component({
   selector: 'app-header',
-  imports: [MatButtonModule, MatMenuModule, RouterLink, MatIconModule],
+  imports: [MatButtonModule, MatMenuModule, RouterLink, MatIconModule,],
+  standalone: true,
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })
-export class Header {
+export class Header implements OnInit {
   private _snackBar = inject(MatSnackBar);
+  private router = inject(Router);
+  private authenticateServices = inject(LoginServices)
+  private responsiveService = inject(ResponsiveServices)
   durationInSeconds = 5;
-  authenticateServices = inject(LoginServices)
-  isMobileView = signal<boolean>(false)
+  constructor() { }
+
   isAuthenticated = this.authenticateServices.authState
-  constructor(private responsvie: BreakpointObserver, private router: Router) {
-
-  }
-
-
+  isMobileView = this.responsiveService.isMobile
 
   ngOnInit(): void {
     this.isAuthenticated.set(this.authenticateServices.isAuthenticated())
-    this.responsvie.observe([
-      Breakpoints.Handset,
-      Breakpoints.HandsetPortrait,
-      Breakpoints.HandsetLandscape,]).subscribe((result) => {
-        this.isMobileView.set(result.matches)
 
-      })
   }
   openSnackBar(message: string, isSuccess: boolean = true) {
     this._snackBar.open(message, '', {

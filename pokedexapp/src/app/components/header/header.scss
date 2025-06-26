@@ -55,16 +55,17 @@ header {
     }
 
     .desktopNav {
-        display: block;
+        display: flex;
         justify-content: space-between;
         align-items: center;
         width: 100%;
 
         >h1 {
-            display: block;
-            text-align: center;
-            justify-content: center;
+            display: flex;
+            text-align: left;
+            justify-content: left;
             width: 100%;
+            padding-left: 4em;
 
             span {
                 &:hover {
@@ -81,8 +82,8 @@ header {
             justify-content: right;
 
             li {
-                margin-left: 3em;
-                margin-right: 3em;
+                margin-left: 2em;
+                margin-right: 4em;
 
                 a {
                     font-size: 18px;

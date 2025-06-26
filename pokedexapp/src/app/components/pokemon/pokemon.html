@@ -1,11 +1,7 @@
-@if (pokemonInfo(); as info) {
-<p>{{info.species?.name}}</p>
-<img src="{{pokemonInfo().sprites?.front_default}}" alt="{{pokemonInfo().species?.name}} picture" />
-<p>
-    @for (type of pokemonInfo().types; track $index) {
-    <span>
-        {{type.type.name}}
-    </span>
-    }
-</p>
-}
+<!-- <h3>{{ this.pokemonName() }}</h3>
+<img [src]="this.pokemonImageURL()" [alt]="this.pokemonName()" /> -->
+
+<!-- <mat-grid-tile>
+    <p style="color: red; font-size: 20px; background: white;">1</p>
+</mat-grid-tile> -->
+<div style="border: 2px solid green; padding: 1rem;">POKEMON CARD</div>
