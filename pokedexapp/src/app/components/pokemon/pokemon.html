@@ -1,0 +1,11 @@
+@if (pokemonInfo(); as info) {
+<p>{{info.species?.name}}</p>
+<img src="{{pokemonInfo().sprites?.front_default}}" alt="{{pokemonInfo().species?.name}} picture" />
+<p>
+    @for (type of pokemonInfo().types; track $index) {
+    <span>
+        {{type.type.name}}
+    </span>
+    }
+</p>
+}

@@ -1,0 +1,45 @@
+<header>
+    @if (!isMobileView();) {
+
+    <nav class="desktopNav">
+
+        <h1><a routerLink="/"><span>Pokédex</span></a></h1>
+        @if (isAuthenticated();) {
+        <ul>
+
+            <li><a routerLink="/collection">Collection</a></li>
+            <li><a href="#" (click)="logout(); $event.preventDefault()">Logout</a></li>
+        </ul>
+        }@else {
+        <ul>
+            <li><a routerLink="/login">Login</a></li>
+            <li><a routerLink="/register">Register</a></li>
+
+        </ul>
+        }
+
+
+    </nav>
+    }
+    @if (isMobileView();) {
+    <nav class="responsiveNav">
+        <!-- <button matButton [matMenuTriggerFor]="menu"> -->
+        <mat-icon matIconButton [matMenuTriggerFor]="menu">menu</mat-icon>
+        <!-- </button> -->
+        <!-- <mat-icon>menu</mat-icon> -->
+        <!-- <button matButton [matMenuTriggerFor]="menu">Menu</button> -->
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item>Login</button>
+            <button mat-menu-item>Register</button>
+            <button mat-menu-item>Collection</button>
+            <button mat-menu-item>Logout</button>
+        </mat-menu>
+        <h1><span>Pokédex</span></h1>
+
+
+
+
+
+    </nav>
+    }
+</header>

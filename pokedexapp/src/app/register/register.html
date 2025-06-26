@@ -1,0 +1,34 @@
+<div class="register-title-container">
+    <h1 class="register-title">Register</h1>
+</div>
+
+<div class="formContainer">
+
+    <form (ngSubmit)="onSubmit();" [formGroup]="registerForm">
+        <div class="container">
+            <div class="field-form-container">
+                <mat-form-field appearance="outline" [class]="!isMobileView()?'inputField':'responsiveInputFields'">
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="pat@example.com" [formControl]="email" (blur)="updateErrorMessage()"
+                        required />
+                    @if (email.invalid) {
+                    <mat-error>{{errorMessage()}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="field-form-container">
+                <mat-form-field appearance="outline" [class]="!isMobileView()?'inputField':'responsiveInputFields'">
+                    <mat-label>Password</mat-label>
+                    <input matInput [formControl]="password" [type]="hide() ? 'password' : 'text'" required />
+                    <button matIconButton matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide()">
+                        <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+            <div class="register-button-container">
+                <button class="submitButton" type="submit" matButton="filled">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>

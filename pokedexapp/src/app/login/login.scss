@@ -1,0 +1,40 @@
+.login-button-container {
+    margin-top: 1em;
+}
+
+.login-title-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 5em;
+}
+
+.login-title {
+    display: block;
+    color: black;
+    min-width: 400px;
+    text-align: center;
+
+}
+
+.formContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // height: 60vh
+}
+
+
+.field-form-container {
+    display: block;
+
+    .inputField {
+        min-width: 400px;
+        padding-top: 1em;
+    }
+
+    .responsiveInputFields {
+        min-width: 250px;
+    }
+
+
+}
