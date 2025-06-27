@@ -1,8 +1,10 @@
 import { Component, input, OnInit, signal } from '@angular/core';
-
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 @Component({
   selector: 'app-pokemon',
-  imports: [],
+  imports: [MatButtonModule, MatCardModule, CommonModule],
   templateUrl: './pokemon.html',
   styleUrl: './pokemon.scss'
 })

@@ -1,7 +1,22 @@
 <!-- <h3>{{ this.pokemonName() }}</h3>
 <img [src]="this.pokemonImageURL()" [alt]="this.pokemonName()" /> -->
 
-<!-- <mat-grid-tile>
-    <p style="color: red; font-size: 20px; background: white;">1</p>
-</mat-grid-tile> -->
-<div style="border: 2px solid green; padding: 1rem;">POKEMON CARD</div>
+
+<!-- <div style="border: 2px solid green; padding: 1rem;">POKEMON CARD</div> -->
+<mat-card class="center-text" appearance="outlined">
+    <mat-card-header>
+        <mat-card-title>{{ this.pokemonName() | titlecase}}</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image [src]="this.pokemonImageURL()" [alt]="this.pokemonName()">
+    <mat-card-content>
+        <!-- <p>
+            The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+            A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+            bred for hunting.
+        </p> -->
+    </mat-card-content>
+    <mat-card-actions>
+        <button matButton>Capture</button>
+        <button matButton>Release</button>
+    </mat-card-actions>
+</mat-card>

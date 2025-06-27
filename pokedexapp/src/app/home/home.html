@@ -5,7 +5,7 @@
 
 <section>
 
-    <mat-grid-list [cols]="isMobileView()? 1 : 10" rowHeight="2:1">
+    <mat-grid-list [gutterSize]="isMobileView()? '10px':'0'" [cols]="isMobileView()? 2 : 10" rowHeight="13em">
         @if (pokemonList$ | async; as pokemonList) {
         @for (pokemon of pokemonList; track $index) {
 
