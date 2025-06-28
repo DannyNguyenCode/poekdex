@@ -16,5 +16,6 @@ export type PokemonType = {
     species?: Species
     sprites?: Sprites
     types?: Types[]
+    id?: number
 }
 

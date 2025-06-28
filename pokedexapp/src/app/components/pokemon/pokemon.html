@@ -1,22 +1,19 @@
-<!-- <h3>{{ this.pokemonName() }}</h3>
-<img [src]="this.pokemonImageURL()" [alt]="this.pokemonName()" /> -->
-
-
-<!-- <div style="border: 2px solid green; padding: 1rem;">POKEMON CARD</div> -->
-<mat-card class="center-text" appearance="outlined">
+<mat-card [style.background-color]="pokemonColor()" class="center-text" appearance="outlined">
     <mat-card-header>
-        <mat-card-title>{{ this.pokemonName() | titlecase}}</mat-card-title>
+        <mat-card-title [style.color]="'white'">{{ this.pokemon()?.species?.name | titlecase}}</mat-card-title>
     </mat-card-header>
-    <img mat-card-image [src]="this.pokemonImageURL()" [alt]="this.pokemonName()">
-    <mat-card-content>
-        <!-- <p>
-            The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-            A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-            bred for hunting.
-        </p> -->
-    </mat-card-content>
+    <img mat-card-image [src]="this.pokemon()?.sprites?.front_default" [alt]="this.pokemon()?.species?.name">
+    @if (this.isAuthenticated();) {
     <mat-card-actions>
-        <button matButton>Capture</button>
-        <button matButton>Release</button>
+        <button [style.color]="'white'" (click)="capturePokemon(this.pokemon())" matButton>Capture</button>
+        <button [style.color]="'white'" (click)="releasePokemon(this.pokemon())" matButton>Release</button>
     </mat-card-actions>
+    }@else {
+    <mat-card-actions>
+        <button disabled matButton>Capture</button>
+        <button disabled matButton>Release</button>
+    </mat-card-actions>
+    }
+
+
 </mat-card>

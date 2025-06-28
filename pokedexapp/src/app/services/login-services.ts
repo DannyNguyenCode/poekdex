@@ -7,6 +7,7 @@ import { Observable, tap } from 'rxjs';
 })
 export class LoginServices {
   authState = signal<boolean>(false)
+  user = signal<User | null>(null)
   http = inject(HttpClient)
   loginUser(user: User): Observable<any> {
     const url = 'http://127.0.0.1:5000/user/login'
@@ -15,6 +16,8 @@ export class LoginServices {
         if (res.token) {
           localStorage.setItem('jwt_token', res.token)
           this.authState.set(true)
+          this.user.set(res.data)
+
         }
       })
     )

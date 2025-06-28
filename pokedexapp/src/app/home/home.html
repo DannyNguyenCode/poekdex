@@ -10,8 +10,7 @@
         @for (pokemon of pokemonList; track $index) {
 
         <mat-grid-tile>
-            <app-pokemon [pokemonNameInput]="pokemon.species?.name"
-                [pokemonImageURLInput]="pokemon.sprites?.front_default" />
+            <app-pokemon [pokemonInput]="pokemon" />
         </mat-grid-tile>
 
 
