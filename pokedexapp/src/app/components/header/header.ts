@@ -38,9 +38,10 @@ export class Header implements OnInit {
     });
   }
   logout() {
-    console.log("inside logout")
     this.authenticateServices.logout()
     this.openSnackBar("User has logged out", true)
-    this.router.navigate
+    this.router.navigate(['/']).then(() => {
+      window.location.reload()
+    })
   }
 }

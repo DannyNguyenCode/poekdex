@@ -16,7 +16,7 @@ export class PokemonServices {
   private authService = inject(LoginServices)
   private readonly cacheKey = 'pokemon_full_cache'
   private readonly ttl = 30 * 24 * 60 * 60 * 1000;
-  private isAuthenticated = this.authService.authState
+
   constructor() { }
   getFullPokemonList(): Observable<PokemonType[]> {
     const now = Date.now();
@@ -64,10 +64,11 @@ export class PokemonServices {
     );
   }
   getCachedPokemonList(): Observable<PokemonType[]> {
-    const cached = localStorage.getItem('pokemon_full_cache');
+
     if (typeof window === 'undefined') {
       return of([]); // SSR-safe fallback
     }
+    const cached = localStorage.getItem('pokemon_full_cache');
     if (cached) {
       const { data } = JSON.parse(cached);
       return of(data as PokemonType[]);
@@ -83,16 +84,19 @@ export class PokemonServices {
       type: pokemon.types?.[0]?.type.name,
       owner_id: this.authService.user()?.id,
     };
-    return this.http.post(url + '/pokemon/add_pokemon', payload).pipe(
-      tap({
-        next: () => {
-          console.log("Pokemon has been captured and added to your collection")
-        },
-        error: () => {
-          console.log("Something went wrong, try again -- the pokemon has run away")
-        }
-      })
-    )
+    return this.http.post(url + '/pokemon/add_pokemon', payload)
 
+  }
+  getUserPokemonList(): Observable<any> {
+    if (!this.authService.isAuthenticated()) {
+      return of([])
+    }
+    const url = environment.baseURL
+    return this.http.get(url + '/pokemon/' + this.authService.user()?.id)
+
+  }
+  removePokemon(pokemon_id?: number): Observable<any> {
+    const url = environment.baseURL
+    return this.http.delete(url + '/pokemon/' + this.authService.user()?.id + '/' + pokemon_id + '/delete_pokemon')
   }
 }

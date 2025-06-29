@@ -1,5 +1,5 @@
 <div class="pokemon-logo">
-    <h1 class="title">Available Pokémon</h1>
+    <h1 class="title">Wild Pokémon</h1>
 
 </div>
 
@@ -7,10 +7,11 @@
 
     <mat-grid-list [gutterSize]="isMobileView()? '10px':'0'" [cols]="isMobileView()? 2 : 10" rowHeight="13em">
         @if (pokemonList$ | async; as pokemonList) {
-        @for (pokemon of pokemonList; track $index) {
+        @for (pokemon of pokemonList; track pokemon.id) {
 
         <mat-grid-tile>
-            <app-pokemon [pokemonInput]="pokemon" />
+            <app-pokemon [pokemonInput]="pokemon" [onClickEvent]="reloadList"
+                [isOwned]="capturedIds().has(pokemon.id!)" />
         </mat-grid-tile>
 
 

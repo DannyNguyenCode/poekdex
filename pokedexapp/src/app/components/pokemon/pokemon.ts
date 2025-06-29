@@ -1,11 +1,12 @@
 import { Component, input, OnInit, signal, inject, computed } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, TitleCasePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { LoginServices } from '../../services/login-services';
 import { PokemonType } from '../../models/pokemon.type';
 import { PokemonServices } from '../../services/pokemon-services';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { RouterLink } from '@angular/router';
 const colorTypes: Record<string, string> = {
   normal: '#A8A77A',
   fire: '#EE8130',
@@ -28,7 +29,7 @@ const colorTypes: Record<string, string> = {
 };
 @Component({
   selector: 'app-pokemon',
-  imports: [MatButtonModule, MatCardModule, CommonModule],
+  imports: [MatButtonModule, MatCardModule, CommonModule, RouterLink],
   templateUrl: './pokemon.html',
   styleUrl: './pokemon.scss'
 })
@@ -36,19 +37,21 @@ const colorTypes: Record<string, string> = {
 export class Pokemon implements OnInit {
   private pokemonServices = inject(PokemonServices)
   private _snackBar = inject(MatSnackBar);
-  pokemonInput = input.required<PokemonType | undefined>()
   private authenticateServices = inject(LoginServices)
+  private titleCase = new TitleCasePipe();
+  pokemonInput = input.required<PokemonType | undefined>()
   private _colorMap = signal(colorTypes)
+  isCollection = input<boolean>(false)
+  onClickEvent = input<() => void>()
+  isOwned = input<boolean>(false)
 
   readonly pokemonColor = computed((): string => {
     const t = this.pokemon()?.types?.[0]?.type?.name;
     return (t && this._colorMap()[t]) ?? 'black';
   });
   pokemon = signal<PokemonType | undefined>(undefined)
-
   isAuthenticated = this.authenticateServices.authState
   ngOnInit(): void {
-
     this.pokemon.set(this.pokemonInput())
     this.isAuthenticated.set(this.authenticateServices.isAuthenticated())
   }
@@ -69,9 +72,9 @@ export class Pokemon implements OnInit {
       this.pokemonServices.addPokemon(pokemon).subscribe({
         next: (res) => {
 
-          console.log("Captured pokemon: " + pokemon?.species?.name)
-          this.openSnackBar(res.message, true)
-          // this.router.navigate(['/'])
+          console.log(res.message)
+          this.openSnackBar("Captured pokemon: " + this.titleCase.transform(pokemon?.species?.name), true)
+          this.onClickEvent()!()
         },
         error: (err) => {
           this.openSnackBar(err.error.error, false)
@@ -84,11 +87,26 @@ export class Pokemon implements OnInit {
     }
   }
   releasePokemon(pokemon: PokemonType | undefined): void {
-    if (pokemon === undefined) {
-      console.log("nothing was passed when release pokemon button was clicked")
+    if (pokemon === undefined || !pokemon.id) {
+      this.openSnackBar("nothing was passed when release pokemon button was clicked", false)
       return
     }
-    console.log("released " + pokemon?.species?.name + " into the wild again")
+    try {
+      this.pokemonServices.removePokemon(pokemon.id).subscribe({
+        next: (res) => {
+          console.log(res.message)
+          this.openSnackBar("Released " + this.titleCase.transform(pokemon?.species?.name) + " back into the wild again", true)
+          this.onClickEvent()!()
+        },
+        error: (err) => {
+          this.openSnackBar(err.error.error, false)
+        }
+      })
+
+    }
+    catch (err: any) {
+      console.log(err)
+    }
   }
 
 }

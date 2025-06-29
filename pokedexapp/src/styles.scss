@@ -58,3 +58,48 @@ body {
 
             filled-container-color:white));
 }
+
+.pokemon-logo {
+    text-align: center;
+    margin: 2rem 0;
+
+    .title {
+        font-family: 'Luckiest Guy', cursive;
+        font-size: 4rem; // adjust as needed
+        line-height: 1;
+        color: #FFEB3B; // yellow fill
+
+        // thick blue outline
+        -webkit-text-stroke: 3px #1976D2;
+        text-stroke: 3px #1976D2;
+
+        // fallback outline + drop shadow
+        text-shadow:
+            /* outline fallback */
+            -3px -3px 0 #1976D2,
+            3px -3px 0 #1976D2,
+            -3px 3px 0 #1976D2,
+            3px 3px 0 #1976D2,
+            /* soft drop-shadow for lift */
+            6px 6px 12px rgba(0, 0, 0, 0.4);
+    }
+
+}
+
+@media (max-width: 600px) {
+    .pokemon-logo {
+        text-align: center;
+        margin: 1rem 0;
+
+        .title {
+            font-size: 1.2rem; // comfortable on phones
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            color: black; // Pikachu-yellow
+            text-shadow: none;
+            padding: 0.5rem;
+            -webkit-text-stroke: 0;
+
+        }
+    }
+}

@@ -1,1 +1,18 @@
-<p>collection works!</p>
+<div class="pokemon-logo">
+    <span class="title">Pokémon Collection</span>
+</div>
+
+<section>
+
+    <mat-grid-list [gutterSize]="isMobileView()? '10px':'0'" [cols]="isMobileView()? 2 : 10" rowHeight="13em">
+        @if (this.pokemonList() ) {
+        @for (pokemon of pokemonList(); track pokemon.id) {
+        <mat-grid-tile>
+            <app-pokemon [pokemonInput]="pokemon" [isCollection]="true" [onClickEvent]="reloadList" />
+        </mat-grid-tile>
+
+
+        }
+        }
+    </mat-grid-list>
+</section>

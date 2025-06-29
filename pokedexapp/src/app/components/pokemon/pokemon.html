@@ -1,18 +1,31 @@
-<mat-card [style.background-color]="pokemonColor()" class="center-text" appearance="outlined">
+<mat-card [style.background-color]="pokemonColor()" class="center-text card-width" appearance="outlined">
     <mat-card-header>
         <mat-card-title [style.color]="'white'">{{ this.pokemon()?.species?.name | titlecase}}</mat-card-title>
     </mat-card-header>
     <img mat-card-image [src]="this.pokemon()?.sprites?.front_default" [alt]="this.pokemon()?.species?.name">
     @if (this.isAuthenticated();) {
     <mat-card-actions>
-        <button [style.color]="'white'" (click)="capturePokemon(this.pokemon())" matButton>Capture</button>
+        @if (this.isCollection()) {
         <button [style.color]="'white'" (click)="releasePokemon(this.pokemon())" matButton>Release</button>
+
+        }@else {
+
+        <button [style.color]="'white'" [disabled]="this.isOwned()" (click)="capturePokemon(this.pokemon())" matButton>
+            @if (this.isOwned()) {
+            Own
+            }@else {
+            Capture
+            }
+        </button>
+
+        }
     </mat-card-actions>
     }@else {
-    <mat-card-actions>
-        <button disabled matButton>Capture</button>
-        <button disabled matButton>Release</button>
-    </mat-card-actions>
+
+    <button [style.color]="'white'" [disabled]="this.isOwned()" (click)="capturePokemon(this.pokemon())" matButton>
+        <a class="login-btn" routerLink="/login">Login</a>
+    </button>
+
     }
 
 

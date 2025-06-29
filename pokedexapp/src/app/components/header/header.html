@@ -23,11 +23,9 @@
     }
     @if (isMobileView();) {
     <nav class="responsiveNav">
-        <!-- <button matButton [matMenuTriggerFor]="menu"> -->
+
         <mat-icon matIconButton [matMenuTriggerFor]="menu">menu</mat-icon>
-        <!-- </button> -->
-        <!-- <mat-icon>menu</mat-icon> -->
-        <!-- <button matButton [matMenuTriggerFor]="menu">Menu</button> -->
+
         <mat-menu #menu="matMenu">
             <button mat-menu-item>Login</button>
             <button mat-menu-item>Register</button>
