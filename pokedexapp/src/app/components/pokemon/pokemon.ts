@@ -7,6 +7,7 @@ import { PokemonType } from '../../models/pokemon.type';
 import { PokemonServices } from '../../services/pokemon-services';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 const colorTypes: Record<string, string> = {
   normal: '#A8A77A',
   fire: '#EE8130',
@@ -37,6 +38,7 @@ const colorTypes: Record<string, string> = {
 export class Pokemon implements OnInit {
   private pokemonServices = inject(PokemonServices)
   private _snackBar = inject(MatSnackBar);
+  private router = inject(Router)
   private authenticateServices = inject(LoginServices)
   private titleCase = new TitleCasePipe();
   pokemonInput = input.required<PokemonType | undefined>()
@@ -69,6 +71,10 @@ export class Pokemon implements OnInit {
       return
     }
     try {
+      if (!this.authenticateServices.isAuthenticated()) {
+        this.router.navigate(['/login']);
+        return;
+      }
       this.pokemonServices.addPokemon(pokemon).subscribe({
         next: (res) => {
 
