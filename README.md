@@ -9,3 +9,4 @@
 6. ~~responsive design for list of pokemon in colleciton page~~
 7. ~~remove pokemon from firestore database on user button click~~
 8. ~~css list of pokemon into cards~~
+9. testing
