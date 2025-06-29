@@ -31,8 +31,6 @@ export class Home implements OnInit {
   capturedIds = signal<Set<number>>(new Set());
 
   ngOnInit(): void {
-    console.log("inside ngoninit home.ts")
-    console.log(this.authenticationService.authState())
 
     if (this.authenticationService.authState()) {
 
