@@ -2,10 +2,12 @@ import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.type';
 import { Observable, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class LoginServices {
+  private baseUrl = environment.baseURL
   authState = signal<boolean>(false)
   user = signal<User | null>(null)
   http = inject(HttpClient)
@@ -27,7 +29,8 @@ export class LoginServices {
 
   }
   loginUser(user: User): Observable<any> {
-    const url = 'http://127.0.0.1:5000/user/login'
+
+    const url = `${this.baseUrl}/user/login`
     return this.http.post<any>(url, user).pipe(
       tap((res) => {
         if (res.token) {
@@ -43,7 +46,7 @@ export class LoginServices {
     )
   }
   registerUser(user: User): Observable<any> {
-    const url = 'http://127.0.0.1:5000/users/create'
+    const url = `${this.baseUrl}/users/create`
     return this.http.post<any>(url, user)
   }
   logout(): void {

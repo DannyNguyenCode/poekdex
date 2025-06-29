@@ -16,7 +16,7 @@ export class PokemonServices {
   private authService = inject(LoginServices)
   private readonly cacheKey = 'pokemon_full_cache'
   private readonly ttl = 30 * 24 * 60 * 60 * 1000;
-
+  private baseUrl = environment.baseURL
   constructor() { }
   getFullPokemonList(): Observable<PokemonType[]> {
     const now = Date.now();
@@ -76,7 +76,7 @@ export class PokemonServices {
     return of([]); // fallback empty list
   }
   addPokemon(pokemon: PokemonType): Observable<any> {
-    const url = environment.baseURL
+    const url = `${this.baseUrl}/pokemon/add_pokemon`
     const payload = {
       id: pokemon.id,
       imageUrl: pokemon.sprites?.front_default,
@@ -84,19 +84,19 @@ export class PokemonServices {
       type: pokemon.types?.[0]?.type.name,
       owner_id: this.authService.user()?.id,
     };
-    return this.http.post(url + '/pokemon/add_pokemon', payload)
+    return this.http.post(url, payload)
 
   }
   getUserPokemonList(): Observable<any> {
     if (!this.authService.isAuthenticated()) {
       return of([])
     }
-    const url = environment.baseURL
-    return this.http.get(url + '/pokemon/' + this.authService.user()?.id)
+    const url = `${this.baseUrl}/pokemon/${this.authService.user()?.id}`
+    return this.http.get(url)
 
   }
   removePokemon(pokemon_id?: number): Observable<any> {
-    const url = environment.baseURL
-    return this.http.delete(url + '/pokemon/' + this.authService.user()?.id + '/' + pokemon_id + '/delete_pokemon')
+    const url = `${this.baseUrl}/pokemon/${this.authService.user()?.id}/${pokemon_id}/delete_pokemon`
+    return this.http.delete(url)
   }
 }
